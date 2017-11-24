@@ -6,7 +6,7 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class ItemParserTest {
 
@@ -51,6 +51,17 @@ public class ItemParserTest {
         Integer expected = 4;
         Integer actual = itemParser.findKeyValuePairsInRawItemData(rawSingleItem).size();
         assertEquals(expected, actual);
+    }
+
+    @Test
+    public void splitKeyValuePairsIntoKeyAndValue() throws Exception {
+        ArrayList<String> arrayOfKeyValuePairs;
+        arrayOfKeyValuePairs = itemParser.findKeyValuePairsInRawItemData(rawSingleItemIrregularSeperatorSample);
+
+        String expected = "[price, 3.23]";
+        String actual = itemParser.splitKeyValuePairsIntoKeysAndValues(arrayOfKeyValuePairs.get(1)).toString();
+
+        Assert.assertEquals(expected, actual);
     }
 
     @Test
