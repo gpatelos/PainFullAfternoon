@@ -72,7 +72,7 @@ public class ItemParserTest {
 
     @Test
     public void parseNameFromRawItemsTest() throws ItemParseException{
-        String expected = "---output---\nMilk\nBreaD\nBrEAD\nMiLK\nCookies\nCoOkieS\nCOokIes\nCOOkieS\nMilK";
+        String expected = "---output---\nMilk\nBreaD\nBrEAD\nMiLK\ncookies\ncookies\ncookies\ncookies\nMilK";
         String actual = "---output---";
         ArrayList<String> items = itemParser.parseRawDataIntoStringArray(batchOne);
 
@@ -123,7 +123,7 @@ public class ItemParserTest {
 
     @Test
     public void parseExpirationFromRawItemsTest() throws ItemParseException{
-        String expected = "bunch of expirations";
+        String expected = "bunch of expiration";
         String actual = "";
         ArrayList<String> items = itemParser.parseRawDataIntoStringArray(rawAll);
 

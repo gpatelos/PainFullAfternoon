@@ -215,20 +215,14 @@ public class ItemParser {
     public String generateCompleteOutput(ArrayList<Item> items) {
 
         String output ="";
-        Map<String, Long> countffs = items.stream().collect(Collectors.groupingBy(Item::getName, Collectors.counting()));
-        Map<String, Map<Double, Long>> counts = items.stream().collect(Collectors.groupingBy(Item::getName, Collectors.groupingBy(Item::getPrice, Collectors.counting())));
+        Map<String, Map<Double, Long>> counts = items.stream().collect(Collectors.groupingBy(Item::getName, Collectors
+                                                              .groupingBy(Item::getPrice, Collectors.counting())));
+      //  Map<String, Long> simpleCount = items.stream().collect(Collectors.groupingBy(Item::getName, Collectors.counting()));
 
-       /* List<Item> milkOnly= items.stream().filter(item -> item.getName().contains("Milk")).collect(Collectors.toList());
-        Map<Double, Long> milkCounts = milkOnly.stream().collect(Collectors.groupingBy(Item::getPrice, Collectors.counting()));
+        for (Map.Entry<String, Map<Double, Long>> entry : counts.entrySet()) {
 
-        List<Item> breadOnly= items.stream().filter(item -> item.getName().contains("Bread")).collect(Collectors.toList());
-        List<Item> applesOnly= items.stream().filter(item -> item.getName().contains("Apples")).collect(Collectors.toList());
-        List<Item> cookiesOnly= items.stream().filter(item -> item.getName().contains("Cookies")).collect(Collectors.toList());
-        */
+                output += String.format("name: %7s%12sseen:%2s times\n",entry.getKey()," ",entry.getValue())+"=============            =============\n";
 
-
-        for (Map.Entry entry : counts.entrySet()) {
-            output += String.format("name: %7s%12sseen:%2s times\n",entry.getKey()," ",entry.getValue())+"=============            =============\n";
         }
 
         return output;
