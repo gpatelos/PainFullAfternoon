@@ -212,12 +212,15 @@ public class ItemParser {
         return linesNotProcessed;
     }
 
+    public String printErrorLine(String rawAll) {
+        return "Errors           \t\t seen: " + captureCountedErrors(rawAll) +" times";
+    }
+
     public String generateCompleteOutput(ArrayList<Item> items) {
 
-        String output ="";
+        String output = "\n\nFailed first attempt.\n\n";
         Map<String, Map<Double, Long>> counts = items.stream().collect(Collectors.groupingBy(Item::getName, Collectors
                                                               .groupingBy(Item::getPrice, Collectors.counting())));
-      //  Map<String, Long> simpleCount = items.stream().collect(Collectors.groupingBy(Item::getName, Collectors.counting()));
 
         for (Map.Entry<String, Map<Double, Long>> entry : counts.entrySet()) {
 
@@ -230,4 +233,28 @@ public class ItemParser {
     }
 
 
+    public List<Item> filterItemsByName(ArrayList<Item> items, String itemToFilter) {
+        List<Item> filteredItemList= items.stream().filter(item -> item.getName().contains(itemToFilter)).collect(Collectors.toList());
+
+
+        return filteredItemList;
+    }
+
+    public String generateNameOutputManually(ArrayList<Item> arrayListOfItems, String itemToFilter) {
+        List<Item> listOfItems;
+        listOfItems = filterItemsByName(arrayListOfItems,itemToFilter);
+
+        String output ="";
+        Map<String, Long> summaryCount = listOfItems.stream().collect(Collectors.groupingBy(Item::getName, Collectors.counting()));
+        for (Map.Entry entry : summaryCount.entrySet()) {
+            output += String.format("Name: %7s%12sseen:%2s times\n",entry.getKey()," ",entry.getValue())+"=============            =============\n";
+        }
+        Map<Double, Long> counts = listOfItems.stream().collect(Collectors.groupingBy(Item::getPrice, Collectors.counting()));
+
+        for (Map.Entry entry : counts.entrySet()) {
+            output += String.format("Price: %6s%12sseen:%2s times\n",entry.getKey()," ",entry.getValue())+"-------------            -------------\n";
+        }
+
+        return output+"\n";
+    }
 }

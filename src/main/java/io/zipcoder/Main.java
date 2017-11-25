@@ -15,15 +15,26 @@ public class Main {
 
     public static void main(String[] args) throws Exception{
         String output = (new Main()).readRawDataToString();
-        System.out.println(output);
+        System.out.println(output+"\n\n");
         // TODO: parse the data in output into items, and display to console.
 
         ArrayList<Item> listOfItems;
         ItemParser itemParser = new ItemParser();
         listOfItems = itemParser.parseRawIntoListOfItems(output);
-        output = itemParser.generateCompleteOutput(listOfItems);
-        System.out.println(output);
-      
+
+        String outputFormattedNicely;
+        String outputAlmostFormattedNicelyInOnePass;
+
+        outputFormattedNicely = itemParser.generateNameOutputManually(listOfItems, "Milk");
+        outputFormattedNicely += itemParser.generateNameOutputManually(listOfItems, "Bread");
+        outputFormattedNicely += itemParser.generateNameOutputManually(listOfItems, "Cookies");
+        outputFormattedNicely += itemParser.generateNameOutputManually(listOfItems, "Apples");
+        outputFormattedNicely += itemParser.printErrorLine(output);
+        System.out.println(outputFormattedNicely);
+
+        outputAlmostFormattedNicelyInOnePass = itemParser.generateCompleteOutput(listOfItems);
+        System.out.println(outputAlmostFormattedNicelyInOnePass);
+
 
 
     }
