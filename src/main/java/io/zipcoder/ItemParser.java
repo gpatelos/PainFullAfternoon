@@ -1,10 +1,10 @@
 package io.zipcoder;
 
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class ItemParser {
 
@@ -18,13 +18,22 @@ public class ItemParser {
     public String parseNameFromRawItem(String rawItem) throws ItemParseException{
         ArrayList<String> keyValuePairs = findKeyValuePairsInRawItemData(rawItem);
         String namePair = keyValuePairs.get(0);
-        String name ="";
+        String name;
+        Pattern namePattern = Pattern.compile("(c\\w\\wkies)", Pattern.CASE_INSENSITIVE);
+        Matcher nameMatch= namePattern.matcher(namePair);
+        if (nameMatch.find()) {
+            namePair = namePair.replaceAll(nameMatch.group(),"cookies");
+        }
+
 
         try{
              name = namePair.split(":")[1];
         }catch (ArrayIndexOutOfBoundsException value){
             throw new ItemParseException("No name", rawItem);
         }
+
+
+
         return name;
 
 
@@ -175,8 +184,18 @@ public class ItemParser {
 
 
     public String generateNameCountOutput(ArrayList<Item> items) {
-        Collectors.groupingBy(items);
+       /* Stream<Item> itemStream = items.stream()
+                                       .collect(Collectors.groupingByConcurrent());
+        List<Item> itemList = itemStream.collect(Collectors.toList());
 
-        return "";
+        Map<String, List<Item>> nameMap = items.stream().collect(Collectors.groupingBy(Item::getName));
+        Map<Double, List<Item>> priceMap = items.stream().collect(Collectors.groupingBy(Item::getPrice));*/
+        String output ="";
+        Map<String, Long> counts = items.stream().collect(Collectors.groupingBy(Item::getName, Collectors.counting()));
+        for (Map.Entry entry : counts.entrySet()) {
+            output += String.format("%13s","name: "+ entry.getKey()) +"            "+ String.format("%13s","seen: "+entry.getValue())+"\n";
+        }
+
+        return output;
     }
 }
