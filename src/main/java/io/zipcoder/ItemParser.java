@@ -32,8 +32,6 @@ public class ItemParser {
             throw new ItemParseException("No name", rawItem);
         }
 
-
-
         return name;
 
 
@@ -93,6 +91,7 @@ public class ItemParser {
 
         try {
             String name = parseNameFromRawItem(rawItem).toLowerCase();
+            name = name.substring(0,1).toUpperCase()+name.substring(1);
             Double price = parsePriceFromRawItem(rawItem);
             String type = parseTypeFromRawItem(rawItem).toLowerCase();
             String expiration = parseExpirationFromRawItem(rawItem).toLowerCase();
@@ -193,7 +192,7 @@ public class ItemParser {
         String output ="";
         Map<String, Long> counts = items.stream().collect(Collectors.groupingBy(Item::getName, Collectors.counting()));
         for (Map.Entry entry : counts.entrySet()) {
-            output += String.format("%13s","name: "+ entry.getKey()) +"            "+ String.format("%13s","seen: "+entry.getValue())+"\n";
+            output += String.format("name: %7s%12sseen:%2s times\n",entry.getKey()," ",entry.getValue())+"=============            =============\n";
         }
 
         return output;
