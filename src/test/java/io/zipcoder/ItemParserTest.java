@@ -204,7 +204,7 @@ public class ItemParserTest {
     }
 
     @Test
-    public void generateNameAndSeen() throws ItemParseException{
+    public void generateNameAndSeenTest() throws ItemParseException{
         ArrayList<Item> listOfItems;
         listOfItems = itemParser.parseRawIntoListOfItems(rawAll);
         String actual = itemParser.generateNameCountOutput(listOfItems);
@@ -212,6 +212,21 @@ public class ItemParserTest {
         Assert.assertEquals(expected, actual);
     }
 
+    @Test
+    public void countedErrorsTest() throws ItemParseException{
+        Integer expected = 4;
+        Integer actual = itemParser.captureCountedErrors(rawAll);
+        Assert.assertEquals(expected, actual);
+    }
+
+    @Test
+    public void generateCompleteOutputTest() throws ItemParseException{
+        ArrayList<Item> listOfItems;
+        listOfItems = itemParser.parseRawIntoListOfItems(rawAll);
+        String actual = itemParser.generateCompleteOutput(listOfItems);
+        String expected = "complete output";
+        Assert.assertEquals(expected, actual);
+    }
 
 }
 
