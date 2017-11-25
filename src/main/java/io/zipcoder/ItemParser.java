@@ -223,7 +223,7 @@ public class ItemParser {
                                                               .groupingBy(Item::getPrice, Collectors.counting())));
 
         //I spent many much time trying to get into the inner level of the nested hashmap.
-        //Ultimately I couldn't only get to the inner map, if I hard coded the keys...
+        //Ultimately I could only get to the inner map, if I hard coded the keys...
         //e.g. entry.getKey(1.23).getValue() which defeated the purpose of nesting.
         //The day after it occurs to me that I might need generics, but I probably should
         //refactor and make it work with regex since my "look behind" failed.
