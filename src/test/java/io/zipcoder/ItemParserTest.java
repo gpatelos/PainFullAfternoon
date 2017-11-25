@@ -218,7 +218,7 @@ public class ItemParserTest {
 
     @Test
     public void printErrorLineTest() throws ItemParseException{
-        String expected = "Errors                 seen: 4 times";
+        String expected = "Errors                   seen: 4 times";
         String actual = itemParser.printErrorLine(rawAll);
 
         Assert.assertEquals(expected,actual);

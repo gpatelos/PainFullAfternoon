@@ -213,7 +213,7 @@ public class ItemParser {
     }
 
     public String printErrorLine(String rawAll) {
-        return "Errors           \t\t seen: " + captureCountedErrors(rawAll) +" times";
+        return "Errors                   seen: " + captureCountedErrors(rawAll) +" times";
     }
 
     public String generateCompleteOutput(ArrayList<Item> items) {
