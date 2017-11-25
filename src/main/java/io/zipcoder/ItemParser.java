@@ -222,9 +222,17 @@ public class ItemParser {
         Map<String, Map<Double, Long>> counts = items.stream().collect(Collectors.groupingBy(Item::getName, Collectors
                                                               .groupingBy(Item::getPrice, Collectors.counting())));
 
-        for (Map.Entry<String, Map<Double, Long>> entry : counts.entrySet()) {
+        //I spent many much time trying to get into the inner level of the nested hashmap.
+        //Ultimately I couldn't only get to the inner map, if I hard coded the keys...
+        //e.g. entry.getKey(1.23).getValue() which defeated the purpose of nesting.
+        //The day after it occurs to me that I might need generics, but I probably should
+        //refactor and make it work with regex since my "look behind" failed.
 
-                output += String.format("name: %7s%12sseen:%2s times\n",entry.getKey()," ",entry.getValue())+"=============            =============\n";
+        for (Map.Entry<String, Map<Double, Long>> entry : counts.entrySet()) {
+            output += String.format("name: %7s%12sseen:%2s times\n",entry.getKey()," ",entry.getValue())+"=============            =============\n";
+        //    for(Map.Entry <Double, Long> innerEntry: entry.getValue()){
+         //       output += String.format("Price: %6s%12sseen:%2s times\n",innerEntry.getKey()," ",innerEntry.getValue())+"-------------            -------------\n";
+          //  }
 
         }
 
